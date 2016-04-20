@@ -1,0 +1,13 @@
+- name: NeoBundleのインストール
+  become: no
+  shell: curl -kL https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | bash
+  args:
+    chdir: ~
+- name: vimrcのコピー
+  become: no
+  copy: src={{ item.src }} dest={{ item.dest }}
+  with_items:
+    - { src: 'files/vim/vimrc', dest: '~/.vimrc' }
+    - { src: 'files/vim/nerdtree.vim', dest: '~/.vim/nerdtree.vim' }
+    - { src: 'files/vim/powerline.vim', dest: '~/.vim/powerline.vim' }
+    - { src: 'files/vim/syntastic.vim', dest: '~/.vim/syntastic.vim' }

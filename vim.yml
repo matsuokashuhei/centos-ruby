@@ -1,0 +1,24 @@
+- name: 依存パッケージのインストール
+  become: yes 
+  yum:  name={{ item }} state=installed
+  with_items:
+  - ncurses-devel
+  - gtk2-devel
+  - atk-devel
+  - libX11-devel
+  - libXt-devel
+  - lua-devel
+  - python-devel
+- name: vimのダウンロード
+  become: yes
+  git:  repo=git://github.com/vim/vim.git dest=/usr/local/src/vim
+- name: configure
+  become: yes
+  shell: source /etc/profile.d/rbenv.sh && ./configure --enable-fail-if-missing --enable-multibyte --with-features=huge --enable-cscope --enable-gui=gtk2 --disable-selinux --prefix=/usr/local --enable-xim --enable-fontset --enable-gpm --enable-rubyinterp --enable-pythoninterp --with-python-config-dir=/usr/lib64/python2.6/config --enable-luainterp=yes --with-lua-prefix=/usr
+  args:
+    chdir: /usr/local/src/vim
+- name: make
+  become: yes
+  shell: make && make install
+  args:
+    chdir: /usr/local/src/vim

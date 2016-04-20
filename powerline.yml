@@ -1,0 +1,41 @@
+- name: pip のインストール
+  become: yes
+  shell: curl -kL https://bootstrap.pypa.io/get-pip.py | python
+- name: powerline-statusのインストール
+  become: no
+  pip:  name=powerline-status extra_args=--user
+- name: .fonts/と.config/fontconfig/conf.d/の作成
+  become: no
+  file: path={{ item }} state=directory
+  with_items:
+    - '~/.fonts'
+    - '~/.config/fontconfig/conf.d'
+- name: フォントの取得
+  become: no
+  get_url: url={{ item.src }} dest={{ item.dest }}
+  with_items:
+    - { src: 'https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf', dest: '~/.fonts/' }
+    - { src: 'https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf', dest: '~/.config/fontconfig/conf.d/' } 
+- name: fc-cache -vf .fonts/
+  become: no
+  shell: fc-cache -vf ~/.fonts/
+- name: .bash_profileの変更
+  become: no
+  lineinfile: >-
+    dest=~/.bash_profile
+    backrefs=yes
+    regexp='PATH=\$PATH\:\$HOME\/bin'
+    line='PATH=$PATH:$HOME/bin:$HOME/.local/bin'
+- name: .bash_profileの変更
+  become: no
+  lineinfile: >-
+    dest=~/.bash_profile
+    line={{ item }}
+  with_items:
+    - powerline-daemon -q
+    - POWERLINE_BASH_CONTINUATION=1
+    - POWERLINE_BASH_SELECT=1
+    - REPOSITORY_ROOT=~/.local/lib/python2.6/site-packages
+    - . $REPOSITORY_ROOT/powerline/bindings/bash/powerline.sh
+
+

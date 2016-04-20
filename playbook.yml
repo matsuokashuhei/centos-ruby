@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - include: basic.yml
+  - include: ruby.yml
+  - include: powerline.yml
+  - include: vim.yml
+  - include: neobundle.yml

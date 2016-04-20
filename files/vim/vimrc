@@ -1,0 +1,90 @@
+if &compatible
+  set nocompatible
+endif
+
+" Required:
+set runtimepath^=/home/vagrant/.vim/bundle/neobundle.vim/
+
+" Required:
+call neobundle#begin(expand('/home/vagrant/.vim/bundle'))
+
+" Let NeoBundle manage NeoBundle
+" Required:
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+" Add or remove your Bundles here:
+NeoBundle 'Shougo/neosnippet.vim'
+NeoBundle 'Shougo/neosnippet-snippets'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'ctrlpvim/ctrlp.vim'
+NeoBundle 'flazz/vim-colorschemes'
+
+" コード補完
+"source ~/.vim/neocomplete.vim
+
+" 静的解析
+source ~/.vim/syntastic.vim
+
+" HTML
+NeoBundle 'tpope/vim-surround'
+" 自動で閉じる
+NeoBundle 'tpope/vim-endwise'
+
+" ドキュメント参照
+NeoBundle 'thinca/vim-ref'
+NeoBundle 'yuku-t/vim-ref-ri'
+
+" メソッド定義元へのジャンプ
+NeoBundle 'szw/vim-tags'
+
+" NERDTree
+source ~/.vim/nerdtree.vim
+
+"----------------------------
+" テーマ
+"----------------------------
+NeoBundle 'zenorocha/dracula-theme', {'rtp': 'vim/'}
+
+
+
+
+
+
+
+" You can specify revision/branch/tag.
+NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
+
+" Required:
+call neobundle#end()
+
+" Required:
+filetype plugin indent on
+
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
+NeoBundleCheck
+
+syntax on
+color dracula
+
+set autoindent             " Indent according to previous line.
+set expandtab              " Use spaces instead of tabs.
+set softtabstop =2         " Tab key indents by 4 spaces.
+set shiftwidth  =2         " >> indents by 4 spaces.
+set shiftround             " >> indents to next multiple of 'shiftwidth'.
+
+set backspace   =indent,eol,start  " Make backspace work as you would expect.
+set hidden                 " Switch between buffers without having to save first.
+set laststatus  =2         " Always show statusline.
+set display     =lastline  " Show as much as possible of the last line.
+
+set showmode               " Show current mode in command-line.
+set showcmd                " Show already typed keys when more are expected.
+
+set incsearch              " Highlight while searching with / or ?.
+set hlsearch               " Keep matches highlighted.
+
+set number                  " Show line number.
+
+" Powerline
+source ~/.vim/powerline.vim

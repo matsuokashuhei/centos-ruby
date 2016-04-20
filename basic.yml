@@ -1,0 +1,18 @@
+- name: add EPEL repo
+  become: true
+  shell: creates=/etc/yum.repos.d/epel.repo rpm -Uvh --replacepkgs http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+- name: yum update
+  become: yes 
+  yum:  name=* state=latest
+- name: 基本パッケージのインストール
+  become: yes 
+  yum: name={{ item }} state=installed
+  with_items:
+  - bash-completion
+  - libselinux-python
+  - nodejs
+  - npm
+- name: install Development Tools
+  become: yes 
+  shell: yum -y groupinstall "Development Tools"
+
