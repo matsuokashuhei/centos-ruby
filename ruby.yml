@@ -1,3 +1,4 @@
+---
 - name: 依存パッケージのインストール
   become: yes 
   yum:  name={{ item }} state=installed
@@ -7,8 +8,9 @@
     - zlib-devel
     - libcurl-devel
     - sqlite-devel
-- shell: bash -lc 'which rbenv | echo $?'
-  become: yes
+- name: which rbenv
+  command: bash -lc 'which rbenv'
+  become: no
   register: result
   ignore_errors: yes
 - name: rbenvのインストール
@@ -18,32 +20,33 @@
     - { repo: 'sstephenson/rbenv.git', dest: 'rbenv' }
     - { repo: 'sstephenson/ruby-build.git', dest: 'rbenv/plugins/ruby-build' }
     - { repo: 'sstephenson/rbenv-default-gems.git', dest: 'rbenv/plugins/rbenv-default-gems' }
-  when: result.stdout != '0'
+  when: result.rc != 0
 - name: rbenvグループの作成
   become: yes
   group: name=rbenv state=present
 - name: rbenvの権限
   become: yes
   file: path=/usr/local/rbenv owner=root group=rbenv mode=g+rwxXs recurse=yes
-  when: result.stdout != '0'
+  when: result.rc != 0
 - name: /etc/profile.d/rbenv.shの作成
   become: yes
   copy: src=files/rbenv.sh dest=/etc/profile.d/rbenv.sh
-  when: result.stdout != '0'
+  when: result.rc != 0
 - name: /usr/local/rbenv/default-gemsの作成
   become: yes
   copy: src=files/default-gems dest=/usr/local/rbenv/default-gems
-  when: result.stdout != '0'
-- shell: bash -lc 'which ruby | echo $?'
+  when: result.rc != 0
+- name: which ruby
+  command: bash -lc 'which ruby'
   become: yes
   register: result
   ignore_errors: yes
 - name: rbenv install 2.3.0
   become: yes
   shell: bash -lc 'rbenv install 2.3.0'
-  when: result.stdout != '0'
+  when: result.rc != 0
 - name: rbenv global 2.3.0
   become: yes
   shell: bash -lc 'rbenv global 2.3.0'
-  when: result.stdout != '0'
+  when: result.rc != 0
 
