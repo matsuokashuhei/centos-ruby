@@ -1,24 +1,34 @@
+---
+- command: bash -lc 'which powerline'
+  become: no
+  register: result
+  ignore_errors: yes
 - name: pip のインストール
   become: yes
   shell: curl -kL https://bootstrap.pypa.io/get-pip.py | python
+  when: result.rc != 0
 - name: powerline-statusのインストール
   become: no
-  pip:  name=powerline-status extra_args=--user
+  pip: name=powerline-status extra_args=--user
+  when: result.rc != 0
 - name: .fonts/と.config/fontconfig/conf.d/の作成
   become: no
   file: path={{ item }} state=directory
   with_items:
     - '~/.fonts'
     - '~/.config/fontconfig/conf.d'
+  when: result.rc != 0
 - name: フォントの取得
   become: no
   get_url: url={{ item.src }} dest={{ item.dest }}
   with_items:
     - { src: 'https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf', dest: '~/.fonts/' }
     - { src: 'https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf', dest: '~/.config/fontconfig/conf.d/' } 
+  when: result.rc != 0
 - name: fc-cache -vf .fonts/
   become: no
   shell: fc-cache -vf ~/.fonts/
+  when: result.rc != 0
 - name: .bash_profileの変更
   become: no
   lineinfile: >-
@@ -26,6 +36,7 @@
     backrefs=yes
     regexp='PATH=\$PATH\:\$HOME\/bin'
     line='PATH=$PATH:$HOME/bin:$HOME/.local/bin'
+  when: result.rc != 0
 - name: .bash_profileの変更
   become: no
   lineinfile: >-
@@ -37,5 +48,6 @@
     - POWERLINE_BASH_SELECT=1
     - REPOSITORY_ROOT=~/.local/lib/python2.6/site-packages
     - . $REPOSITORY_ROOT/powerline/bindings/bash/powerline.sh
+  when: result.rc != 0
 
 
