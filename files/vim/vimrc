@@ -67,24 +67,40 @@ NeoBundleCheck
 syntax on
 color dracula
 
-set autoindent             " Indent according to previous line.
-set expandtab              " Use spaces instead of tabs.
-set softtabstop =2         " Tab key indents by 4 spaces.
-set shiftwidth  =2         " >> indents by 4 spaces.
-set shiftround             " >> indents to next multiple of 'shiftwidth'.
+set encoding     =utf-8             " エンコード
+set fileencoding =utf-8             " ファイルのエンコード
 
-set backspace   =indent,eol,start  " Make backspace work as you would expect.
-set hidden                 " Switch between buffers without having to save first.
-set laststatus  =2         " Always show statusline.
-set display     =lastline  " Show as much as possible of the last line.
+set noswapfile                      " .swapファイルを作らない
+set nowritebackup                   " バックアップファイルを作らない
+set nobackup                        " バックアップをしない
 
-set showmode               " Show current mode in command-line.
-set showcmd                " Show already typed keys when more are expected.
+set autoindent                      " オートインデント
+set shiftwidth   =2                 " インデントにしたときのスペースの文字数
+set expandtab                       " タブをスペースにする
+set softtabstop  =2                 " タブをスペースにするときの文字数
+set shiftround                      " インデントをオプション 'shiftwidth' の値の倍数に丸める。 コマンド \">\"と \"<\" に適用される。Insertモードでの CTRL-T と CTRL-D では、インデントは常に 'shiftwidth' の倍数に丸められる
 
-set incsearch              " Highlight while searching with / or ?.
-set hlsearch               " Keep matches highlighted.
+set backspace    =indent,eol,start  " Make backspace work as you would expect.
+set hidden                          " Switch between buffers without having to save first.
+set laststatus   =2                 " Always show statusline.
+set display      =lastline          " Show as much as possible of the last line.
 
-set number                  " Show line number.
+set showmatch                       " 括弧のハイライト
+
+" 検索
+set incsearch                       " Highlight while searching with / or ?.
+set ignorecase
+set smartcase
+set hlsearch                        " Keep matches highlighted.
+
+set mouse       =a                  " マウスモード
+
+set number                          " 行番号
+set vb t_vb     =                   " ビープ音
+set novisualbell
+
+" Vim wiki
+" http://vimwiki.net/?FrontPage
 
 " Powerline
 source ~/.vim/powerline.vim
