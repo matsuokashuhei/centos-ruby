@@ -7,3 +7,4 @@
   - include: powerline.yml
   - include: vim.yml
   - include: neobundle.yml
+  - include: mysql.yml
