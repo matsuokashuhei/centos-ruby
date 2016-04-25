@@ -1,6 +1,3 @@
-#- name: add EPEL repo
-#  become: true
-#  shell: creates=/etc/yum.repos.d/epel.repo rpm -Uvh --replacepkgs http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 - name: add EPEL repo
   become: yes 
   yum: name={{ item }} state=installed
@@ -17,6 +14,10 @@
   - libselinux-python
   - nodejs
   - npm
+  - libjpeg-devel
+  - libpng-devel
+  - ImageMagick
+  - ImageMagick-devel
 - name: install Development Tools
   become: yes 
   yum: name="@Development tools" state=present
