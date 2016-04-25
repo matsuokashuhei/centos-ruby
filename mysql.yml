@@ -12,5 +12,9 @@
   #  become: no
   #  register: result
   #  ignore_errors: yes
+- name: /etc/my.cnfの作成
+  become: yes
+  copy: src=files/mysql/my.cnf dest=/etc/my.cnf backup=yes
+  when: result.rc != 0
 - name: start mysqld
   service: name=mysqld state=started enabled=yes
