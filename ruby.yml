@@ -30,11 +30,11 @@
   when: result.rc != 0
 - name: /etc/profile.d/rbenv.shの作成
   become: yes
-  copy: src=files/rbenv.sh dest=/etc/profile.d/rbenv.sh
+  copy: src=files/rbenv/rbenv.sh dest=/etc/profile.d/rbenv.sh
   when: result.rc != 0
 - name: /usr/local/rbenv/default-gemsの作成
   become: yes
-  copy: src=files/default-gems dest=/usr/local/rbenv/default-gems
+  copy: src=files/rbenv/default-gems dest=/usr/local/rbenv/default-gems
   when: result.rc != 0
 - name: which ruby
   command: bash -lc 'which ruby'
