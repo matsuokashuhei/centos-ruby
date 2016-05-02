@@ -20,6 +20,7 @@
     - { repo: 'sstephenson/rbenv.git', dest: 'rbenv' }
     - { repo: 'sstephenson/ruby-build.git', dest: 'rbenv/plugins/ruby-build' }
     - { repo: 'sstephenson/rbenv-default-gems.git', dest: 'rbenv/plugins/rbenv-default-gems' }
+    - { repo: 'tpope/rbenv-ctags.git', dest: 'rbenv/plugins/tpope/rbenv-ctags' }
   when: result.rc != 0
 - name: rbenvグループの作成
   become: yes
