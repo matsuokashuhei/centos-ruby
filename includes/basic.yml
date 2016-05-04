@@ -16,8 +16,6 @@
   - npm
   - libjpeg-devel
   - libpng-devel
-  - ImageMagick
-  - ImageMagick-devel
   - tree
 - name: install Development Tools
   become: yes 

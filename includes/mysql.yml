@@ -1,20 +1,24 @@
+- name: which mysql
+  command: bash -lc 'which mysql'
+  become: no
+  register: result
+  ignore_errors: yes
 - yum: name=http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm state=installed
   become: yes
+  when: result.rc != 0
 - name: MySQLのインストール
   become: yes 
   yum: name={{ item }} state=installed
   with_items:
-    - mysql
-    - mysql-devel
-    - mysql-server
-    - mysql-utilities
-  #- command: which mysql
-  #  become: no
-  #  register: result
-  #  ignore_errors: yes
+  - mysql
+  - mysql-devel
+  - mysql-server
+  - mysql-utilities
+  when: result.rc != 0
 - name: /etc/my.cnfの作成
   become: yes
   copy: src=files/mysql/my.cnf dest=/etc/my.cnf backup=yes
   when: result.rc != 0
 - name: start mysqld
   service: name=mysqld state=started enabled=yes
+  when: result.rc != 0

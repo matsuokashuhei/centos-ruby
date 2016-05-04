@@ -2,9 +2,8 @@
 - hosts: all
   become: yes
   tasks:
-  - include: basic.yml
-  - include: ruby.yml
-  - include: powerline.yml
-  - include: vim.yml
-  - include: neobundle.yml
-  - include: mysql.yml
+  - include: includes/basic.yml
+  - include: includes/ruby.yml
+  - include: includes/powerline.yml
+  - include: includes/vim.yml
+  - include: includes/mysql.yml
